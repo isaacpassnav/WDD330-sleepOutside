@@ -1,0 +1,7 @@
+# Team to develop for WDD 330 - Web Frontend Development II
+
+-Trello url.
+-https://trello.com/invite/b/67ce61b2fd8add8af09e8009/ATTI2f6829f49b578c14323417182529b55b51835717/sleep-outside-team-14
+
+## Web Development Team Members
+-Isaac Pasapera 

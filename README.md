@@ -7,6 +7,10 @@
 
  - https://byui-cse.github.io/wdd330-ww-course/week01/team.html
 
+ - This url we working to team for develop to project for  WDD 330.
+
+ - https://rococo-brioche-41b1c9.netlify.app/   
+
 ### Prerequisites
 
 - You must have Node installed to run the following commands.
