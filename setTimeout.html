@@ -1,63 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>setTimeout - test</title>
     <style>
-        body{
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        #timer{
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ff5733;
-        }
-        button {
-            margin: 5px;
-            padding: 10px 15px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      #timer {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ff5733;
+      }
+      button {
+        margin: 5px;
+        padding: 10px 15px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Countdow Timer ⏳</h1>
-    <input type="number" id="timeInput" placeholder="Enter time in seconds" min="1">
+    <input
+      type="number"
+      id="timeInput"
+      placeholder="Enter time in seconds"
+      min="1"
+    />
     <button onclick="startCountDown()">Start</button>
     <button onclick="togglePauseResume()">Pause/Resume</button>
-    <div id="timer"> 00:00 </div>
+    <div id="timer">00:00</div>
 
     <script>
-        let countDown;
-        let remainingTime = 0;
-        let isPaused = false;
+      let countDown;
+      let remainingTime = 0;
+      let isPaused = false;
 
-        function startCountDown(){
-            clearInterval(countDown);
-            let inputSeconds = document.getElementById("timeInput").value;
-            remainingTime = parseInt(inputSeconds, 10) || 10; // default 10 seconds
+      function startCountDown() {
+        clearInterval(countDown);
+        let inputSeconds = document.getElementById("timeInput").value;
+        remainingTime = parseInt(inputSeconds, 10) || 10; // default 10 seconds
+        updateDisplay();
+        countDown = setInterval(() => {
+          if (!isPaused && remainingTime > 0) {
+            remainingTime--;
             updateDisplay();
-            countDown = setInterval (() =>{
-                if (!isPaused && remainingTime > 0) {
-                    remainingTime--;
-                    updateDisplay();
-                };
-                if (remainingTime === 0) {
-                    clearInterval(countDown);
-                    alert("Time is Up!  🎉")
-                };
-            }, 1000);
-
-        }
-        function togglePauseResume (){
-            isPaused = !isPaused;
-        }
-        function updateDisplay (){
-            document.getElementById("timer").textContent = `00:${remainingTime < 10 ? "0":""}${remainingTime}`;
-        }
+          }
+          if (remainingTime === 0) {
+            clearInterval(countDown);
+            alert("Time is Up!  🎉");
+          }
+        }, 1000);
+      }
+      function togglePauseResume() {
+        isPaused = !isPaused;
+      }
+      function updateDisplay() {
+        document.getElementById("timer").textContent =
+          `00:${remainingTime < 10 ? "0" : ""}${remainingTime}`;
+      }
     </script>
-</body>
+  </body>
 </html>
