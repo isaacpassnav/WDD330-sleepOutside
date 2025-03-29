@@ -3,15 +3,17 @@ import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 export default class ProductDetails {
   constructor(productId, dataSource) {
     this.productId = productId;
-    this.product = null;
+    this.product = {};
     this.dataSource = dataSource;
   }
+
   async init() {
     try {
+      console.log("Fetching product with ID:", this.productId);
       this.product = await this.dataSource.findProductById(this.productId);
 
       if (!this.product) {
-        console.error("Product not found!");
+        console.error("Product not found!", this.productId);
         this.displayErrorMessage();
         return;
       }
@@ -33,37 +35,27 @@ export default class ProductDetails {
   }
 
   renderProductDetails() {
-    const container = document.getElementById("productDetails");
-    if (!container) {
-      console.error("Product details container not found!");
+    if (!this.product) {
+      console.error("No product data available!");
       return;
     }
 
-    container.innerHTML = this.productDetailsTemplate(this.product);
-  }
+    document.querySelector("h2").textContent = this.product.Brand?.Name || "Unknown Brand";
+    document.querySelector("h3").textContent = this.product.NameWithoutBrand || "No Name";
+    
+    const productImage = document.getElementById("productImage");
+    if (productImage) {
+      productImage.src = this.product.Image || "placeholder.jpg";
+      productImage.alt = this.product.NameWithoutBrand || "Product Image";
+    }
 
-  productDetailsTemplate(product) {
-    return `
-      <section class="product-detail">
-        <h3>${product.Brand?.Name || "Unknown Brand"}</h3>
-        <h2 class="divider">${product.NameWithoutBrand || "No Name"}</h2>
-        <img
-          class="divider"
-          src="${product.Image || "placeholder.jpg"}"
-          alt="${product.NameWithoutBrand || "Product Image"}"
-        />
-        <p class="product-card__price">$${product.FinalPrice || "N/A"}</p>
-        <p class="product__color">${product.Colors?.[0]?.ColorName || "No Color Available"}</p>
-        <p class="product__description">
-          ${product.DescriptionHtmlSimple || "No description available."}
-        </p>
-        <div class="product-detail__add">
-          <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-        </div>
-      </section>
-    `;
-  }
+    document.getElementById("productPrice").textContent = `$${this.product.FinalPrice || "N/A"}`;
+    document.getElementById("productColor").textContent = this.product.Colors?.[0]?.ColorName || "No Color Available";
+    document.getElementById("productDesc").innerHTML = this.product.DescriptionHtmlSimple || "No description available.";
 
+    document.getElementById("addToCart").dataset.id = this.product.Id;
+  }
+    
   displayErrorMessage() {
     const container = document.getElementById("productDetails");
     if (container) {
@@ -71,5 +63,6 @@ export default class ProductDetails {
     }
   }
 }
+
 
 

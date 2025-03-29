@@ -2,8 +2,18 @@ import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
+  // const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+  // document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  if (!Array.isArray(cartItems)) {
+    console.error("Error: 'so-cart' no es un array válido", cartItems);
+    return;
+  }
+
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+}
+function getCart() {
+  return JSON.parse(localStorage.getItem("so-cart")) || [];
 }
 
 function cartItemTemplate(item) {
@@ -26,3 +36,5 @@ function cartItemTemplate(item) {
 }
 
 renderCartContents();
+
+window.renderCartContents = renderCartContents;
